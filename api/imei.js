@@ -1,4 +1,13 @@
 export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // 🔥 CORS izni veriyoruz
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+
   const imei = req.query.imei;
   if (!imei) {
     return res.status(400).json({ error: "IMEI parametresi eksik." });
@@ -23,7 +32,8 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       model: data.object?.model || "Yok",
-      model_number: data.object?.model_number || "Yok"
+      model_number: data.object?.model_number || "Yok",
+      find_my_iphone: data.object?.find_my_iphone || "Bilinmiyor"
     });
   } catch (error) {
     return res.status(500).json({ error: "Sunucu hatası: " + error.message });
