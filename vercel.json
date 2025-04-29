@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/imei.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/imei", "dest": "api/imei.js" }
+  ]
+}
